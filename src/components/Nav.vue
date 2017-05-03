@@ -89,7 +89,7 @@
                 position absolute
                 left 50%
                 top 50%
-                font-size 12px
+                font-size 14px
                 text-align center
                 white-space nowrap
                 transform translate(-50%, -50%)
