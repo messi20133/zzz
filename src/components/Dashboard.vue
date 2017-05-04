@@ -4,10 +4,20 @@
     </div>
 </template>
 <script>
+
 import Vue from 'vue'
-var MyComponent = Vue.extend({
-  template: '<div>Hello!</div>'
-})
+
+// var MyComponent = Vue.extend({
+//   template: '<div>{{msg}}</div>',
+//   data: function () {
+//         return {
+//             msg: 'hello'
+//         }
+//     }
+// })
+
+import Text from './comps/Text'
+
 export default {
     name: 'Dashboard',
     data: function () {
@@ -18,9 +28,10 @@ export default {
     methods: {
         drop: function (event) {
             console.log("drop! ");
-            var Text =new MyComponent().$mount();
+            var MyComponent = Vue.extend(Text);
+            var t = new MyComponent().$mount();
             var ele = this.$refs.dashboard;
-            $(ele).append(Text.$el);
+            $(ele).append(t.$el);
         },
 
         dragenter: function (event) {
