@@ -20,7 +20,11 @@ export default {
         padding 0 20px
         z-index 1
         box-sizing border-box
-        line-height 80px
+        :before
+            display inline-block
+            content ''
+            vertical-align middle
+            height 100%
         .logo 
             display inline
             vertical-align middle 

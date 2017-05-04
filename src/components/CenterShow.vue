@@ -16,6 +16,12 @@
         <div class='show'>
             <div class='bg-wrapper'>
                 <div class='phone'>
+                    <div class='toptips'>
+                        <span>中国联通</span>
+                    </div>
+                    <div class='dashboard'>
+                        <c-dashboard></c-dashboard>
+                    </div>
                 </div>
                 <span class='el-icon-setting setting'></span>
             </div>
@@ -23,8 +29,12 @@
     </section>
 </template>
 <script>
+    import Dashboard from './Dashboard'
     export default {
-        name: "CenterShow"
+        name: "CenterShow",
+        components: {
+            'c-dashboard': Dashboard
+        }
     }
 </script>
 <style lang='styl'>
@@ -71,6 +81,28 @@
         left 50%
         top 50%
         transform translate(-50%, -50%)
+        .toptips
+            height 24px
+            width 100%
+            box-sizing border-box
+            position absolute
+            background black
+            :before
+                display inline-block
+                content ''
+                vertical-align middle
+                height 100%
+            span
+                display inline-block
+                vertical-align middle
+                color #ffffff
+                font-size 12px
+        .dashboard
+            padding-top 24px
+            height 100%    
+        
+
+
     .setting
         position relative
         left 115%
