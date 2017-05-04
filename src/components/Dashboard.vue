@@ -29,7 +29,9 @@ export default {
         drop: function (event) {
             console.log("drop! ");
             var MyComponent = Vue.extend(Text);
-            var t = new MyComponent().$mount();
+            var comp = new MyComponent();
+            var t = comp.$mount();
+            window.comp = comp;
             var ele = this.$refs.dashboard;
             $(ele).append(t.$el);
         },
