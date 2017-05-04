@@ -17,7 +17,7 @@ import Vue from 'vue'
 // })
 
 import Text from './comps/Text'
-
+import Img from './comps/Img'
 export default {
     name: 'Dashboard',
     data: function () {
@@ -28,7 +28,7 @@ export default {
     methods: {
         drop: function (event) {
             console.log("drop! ");
-            var MyComponent = Vue.extend(Text);
+            var MyComponent = Vue.extend(Img);
             var comp = new MyComponent();
             var t = comp.$mount();
             window.comp = comp;
