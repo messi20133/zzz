@@ -1,68 +1,61 @@
 <template>
+<!--
     <el-upload
-  class="avatar-uploader"
-  action="https://jsonplaceholder.typicode.com/posts/"
-  :show-file-list="false"
-  :on-success="handleAvatarSuccess"
-  :before-upload="beforeAvatarUpload">
-  <img v-if="imageUrl" :src="imageUrl" class="avatar">
-  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-</el-upload>
+      class="avatar-uploader"
+      action="https://jsonplaceholder.typicode.com/posts/"
+      :show-file-list="false"
+      :on-success="handleAvatarSuccess"
+      :before-upload="beforeAvatarUpload">
+      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>
+    -->
+    <div class="avatar-uploader" ref="component">
+      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </div>
 </template>
 <script>
-import {Upload} from 'element-ui'
-import Vue from 'vue'
-Vue.use(Upload);
 export default {
-    components: {
-        Upload
-    },
     data() {
       return {
         imageUrl: ''
       };
     },
     methods: {
-      handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-      }
     }
 }
 </script>
 <style>
-.avatar-uploader .el-upload {
+.avatar-uploader {
     border: 1px dashed #d9d9d9;
+    box-sizing: border-box;
     border-radius: 6px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    width: 100%;
+    height: 30%;
   }
-  .avatar-uploader .el-upload:hover {
+  .avatar-uploader:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+  .avatar-uploader:hover {
     border-color: #20a0ff;
   }
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
+    vertical-align: middle;
     text-align: center;
+    display:inline-block;
+    width: 100%;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
+    width: 100%;
     display: block;
   }
 </style>

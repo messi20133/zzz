@@ -100,6 +100,7 @@
         .dashboard
             padding-top 24px
             height 100%    
+            box-sizing border-box
         
 
 

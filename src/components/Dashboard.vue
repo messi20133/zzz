@@ -1,39 +1,26 @@
 <template>
-    <div ref="dashboard" class="mianban" v-on:drop="drop" v-on:dragenter='dragenter' v-on:dragover='dragover'>
-        <span>{{msg}}</span>
+    <div ref="dashboard" class="mianban"  v-on:drop="drop" v-on:dragenter='dragenter' v-on:dragover='dragover'>
+        <div v-for='comps in componentsList' v-bind:is='comps'></div>
     </div>
 </template>
 <script>
 
 import Vue from 'vue'
-
-// var MyComponent = Vue.extend({
-//   template: '<div>{{msg}}</div>',
-//   data: function () {
-//         return {
-//             msg: 'hello'
-//         }
-//     }
-// })
-
-import Text from './comps/Text'
 import Img from './comps/Img'
 export default {
     name: 'Dashboard',
+    components: {
+        'c-img': Img
+    },
     data: function () {
         return {
-            msg: "hello yidian"
+            componentsList: []
         }
     },
     methods: {
         drop: function (event) {
             console.log("drop! ");
-            var MyComponent = Vue.extend(Img);
-            var comp = new MyComponent();
-            var t = comp.$mount();
-            window.comp = comp;
-            var ele = this.$refs.dashboard;
-            $(ele).append(t.$el);
+            this.componentsList.push("c-img");
         },
 
         dragenter: function (event) {
@@ -52,4 +39,5 @@ export default {
     .mianban
         width 100%
         height 100%
+        overflow auto
 </style>
