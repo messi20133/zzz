@@ -10,7 +10,7 @@
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
     -->
-    <div class="avatar-uploader" ref="component">
+    <div class="avatar-uploader elehover" ref="component">
       <img v-if="imageUrl" :src="imageUrl" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </div>
@@ -28,7 +28,6 @@ export default {
 </script>
 <style>
 .avatar-uploader {
-    border: 1px dashed #d9d9d9;
     box-sizing: border-box;
     border-radius: 6px;
     cursor: pointer;
@@ -43,7 +42,11 @@ export default {
     vertical-align: middle;
     height: 100%;
   }
-  .avatar-uploader:hover {
+  .elehover {
+    border: 1px dashed #d9d9d9;
+
+  }
+  .elehover:hover {
     border-color: #20a0ff;
   }
   .avatar-uploader-icon {
