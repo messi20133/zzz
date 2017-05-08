@@ -12,14 +12,12 @@
             'c-textdetail': Textdetail
         },
         data () {
-            console.log('kkkkkkkkkkk' + this.$store.state.base.type);
             return {
                 type: this.$store.state.base.type
             }
         },
         computed: {
             isText: function () {
-                console.log('9999999999' + this.type);
                 return this.$store.state.base.type == 'text'
             },
         },

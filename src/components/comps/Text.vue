@@ -1,5 +1,5 @@
 <template>
-    <div class='elehover'>{{$store.state.text[index].msg}}</div>
+    <div class='elehover' :index="index" ref="component">{{$store.state.text[index].msg}}</div>
 </template>
 <script>
 export default {
@@ -10,16 +10,12 @@ export default {
         }
     },
     mounted: function () {
-        console.log("created");
-        console.log(this.currentIndex + " " + this.index);
         if(this.currentIndex == this.index) {
-            console.log("success");
             this.trigglerSelect(this.index);
         }
     },
     watch: {
         currentIndex: function (val, oldval) {
-            console.log("val:"  + val + " ;oldval:" + oldval);
             if(val == oldval) {
                 this.trigglerSelect(val);
             }

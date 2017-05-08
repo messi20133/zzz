@@ -14,6 +14,7 @@ import Header from '@/components/Header'
 import Nav from '@/components/Nav'
 import CenterShow from '@/components/CenterShow'
 import Editor from '@/components/Editor'
+
 export default {
   name: 'app',
   components: {
@@ -26,6 +27,7 @@ export default {
 </script>
 
 <style lang='styl'>
+  @import '../node_modules/dragula/dragula'
   .wrapper
     position relative
     height 100%

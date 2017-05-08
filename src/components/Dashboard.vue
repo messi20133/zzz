@@ -1,5 +1,5 @@
 <template>
-    <div ref="dashboard" class="mianban"  v-on:drop="drop" v-on:dragenter='dragenter' v-on:dragover='dragover' v-on:click='click'>
+    <div ref="dashboard" class="mianban" id='targetelements' data-target='dropEle'>
         <div v-for='comps in componentsList'  v-bind:currentIndex='currentIndex' v-bind:index='comps.index'  v-bind:is='comps.type'></div>
     </div>
 </template>
@@ -8,11 +8,22 @@ var uuid = 0;
 import Vue from 'vue'
 import Img from './comps/Img'
 import Text from './comps/Text'
+import Blank from './comps/Blank'
+import dragula from 'dragula'
+import Utils from '../utils/utils'
+//创建影子标识
+function makeElement(){
+    var newNode = document.createElement("div");
+    newNode.textContent = "放在这里!";
+    newNode.classList.add("elem");
+    return newNode;
+}
 export default {
     name: 'Dashboard',
     components: {
         'c-img': Img,
-        'c-text': Text
+        'c-text': Text,
+        'c-blank': Blank
     },
     data: function () {
         return {
@@ -20,40 +31,70 @@ export default {
             componentsList: []
         }
     },
-    methods: {
-        drop: function (event) {
-            console.log("drop! ");
-            var transfer = event.dataTransfer;
-            if(transfer) {
-                var type = transfer.getData("eleType");
-                console.log("~~~~~~~~~~" + type);
-                var temp  = uuid;
-                this.$store.commit("createInstance", temp);
-                this.componentsList.push({
-                    type: "c-" + type,
-                    index: uuid++
-                });
-                this.currentIndex = temp;
-            }
-        },  
+    mounted: function () {
+        var that = this;
+        dragula([document.querySelector('.sourcelements'), document.querySelector('#targetelements')], {
+            copy: function (el, source) {
+                return source === document.querySelector('.sourcelements');
+            },
+            accepts: function (el, target) {
+                return  target !== document.querySelector('.sourcelements');
+            },
 
-        dragenter: function (event) {
-            //alert(1);
-            console.log("drag enter! ");
-        },
-
-        dragover: function (event) {
-            event.preventDefault();
-            console.log('drag over!');
-        },
-
-        click: function () {
-            this.componentsList.forEach(function(item){
-                item.tiggler = false;
+            }).on('drop', function (el, target, source, sibling) {
+                if(!target){
+                    return;
+                }
+                //el.parentNode.replaceChild(this._shadow, el);
+                //$(el).hide();
+                if(source === document.querySelector('.sourcelements')){
+                    var type = $(el).attr("data-type");
+                    var temp  = uuid;
+                    if(!sibling) {
+                        that.$store.commit("createInstance", temp);
+                        that.componentsList.push({
+                            type: "c-" + type,
+                            index: uuid++
+                        });
+                        that.currentIndex = temp;
+                    } else {
+                        var index = Utils.indexOf(that.componentsList, 'index', $(sibling).attr('index'));
+                        that.$store.commit("createInstance", temp);
+                        that.componentsList.splice(index, 0 , {
+                            type: "c-" + type,
+                            index: uuid++
+                        })
+                        that.currentIndex = temp;
+                    }
+                } else {
+                    console.log('index:' + $(el).attr('index'));
+                    var elIndex = Utils.indexOf(that.componentsList, 'index', $(el).attr('index'));
+                    console.log('ele:' + elIndex);
+                    var temp = that.componentsList.splice(elIndex, 1);
+                    if(!sibling) {
+                        that.componentsList.push(temp[0]);
+                    } else {
+                        var siblingIndex = Utils.indexOf(that.componentsList, 'index', $(sibling).attr('index'));
+                        that.componentsList.splice(siblingIndex, 0, temp[0]);
+                    } 
+                    console.log('length:' + that.componentsList.length);
+                }
+                $(el).remove();
+            }).on('shadow', function (el, container, source) {
+                // if (!this._shadow){
+                //     this._shadow = makeElement();
+                //     this._shadow.classList.add("gu-transit");
+                // }
+                // el.style.display = 'none';
+                // el.parentNode.insertBefore(this._shadow, el);
+            }).on('dragend', function (el) {
+                if(this._shadow){
+                    this._shadow.remove();
+                    this._shadow = null;
+                }
             });
-            console.log(this.componentsList[0].tiggler);
-        }
-
+    },
+    methods: {
     }
 }
 </script>

@@ -3,18 +3,17 @@ export default {
         sss: '22222222222'
     },
     mutations: {
-        createInstance (state, index) {
-            console.log("。。。。。。。。。。ok~~~~~");
+        createInstance(state, index) {
             state[index] = {
                 msg: 'this is demo',
             }
         },
 
-        deleteInstance (state, index) {
+        deleteInstance(state, index) {
             delete state[index];
         },
 
-        setMsg (state, index, msg) {
+        setMsg(state, index, msg) {
             state[index].msg = msg
         }
     }
