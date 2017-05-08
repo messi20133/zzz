@@ -10,6 +10,7 @@ export default {
         }
     },
     mounted: function () {
+        console.log("0000000000000000000");
         if(this.currentIndex == this.index) {
             this.trigglerSelect(this.index);
         }

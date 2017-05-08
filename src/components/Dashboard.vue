@@ -45,9 +45,15 @@ export default {
                 if(!target){
                     return;
                 }
+                if(sibling == this._shadow) {
+                    sibling = sibling.nextSibling;
+                }
+                if(sibling == el) {
+                    sibling = sibling.nextSibling;
+                }
                 //el.parentNode.replaceChild(this._shadow, el);
-                //$(el).hide();
                 if(source === document.querySelector('.sourcelements')){
+                    $(el).remove();
                     var type = $(el).attr("data-type");
                     var temp  = uuid;
                     if(!sibling) {
@@ -67,26 +73,23 @@ export default {
                         that.currentIndex = temp;
                     }
                 } else {
-                    console.log('index:' + $(el).attr('index'));
                     var elIndex = Utils.indexOf(that.componentsList, 'index', $(el).attr('index'));
-                    console.log('ele:' + elIndex);
                     var temp = that.componentsList.splice(elIndex, 1);
                     if(!sibling) {
                         that.componentsList.push(temp[0]);
                     } else {
                         var siblingIndex = Utils.indexOf(that.componentsList, 'index', $(sibling).attr('index'));
                         that.componentsList.splice(siblingIndex, 0, temp[0]);
-                    } 
-                    console.log('length:' + that.componentsList.length);
+                    }
+                    el.style.display = 'block'; 
                 }
-                $(el).remove();
             }).on('shadow', function (el, container, source) {
-                // if (!this._shadow){
-                //     this._shadow = makeElement();
-                //     this._shadow.classList.add("gu-transit");
-                // }
-                // el.style.display = 'none';
-                // el.parentNode.insertBefore(this._shadow, el);
+                if (!this._shadow){
+                    this._shadow = makeElement();
+                    this._shadow.classList.add("gu-transit");
+                }
+                el.style.display = 'none';
+                el.parentNode.insertBefore(this._shadow, el);
             }).on('dragend', function (el) {
                 if(this._shadow){
                     this._shadow.remove();
